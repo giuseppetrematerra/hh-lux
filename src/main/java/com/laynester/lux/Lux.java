@@ -26,7 +26,7 @@ public class Lux extends HabboPlugin implements EventListener {
     public static String pluginPrefix = "LUX";
     public static String pluginName = "Lux";
     public static String pluginAuthor = "Layne & Hackerman";
-    public static String version = "2.3.0";
+    public static String version = "2.3.1";
     public static int productId = 4;
     public static Lux INSTANCE = null;
 

@@ -25,8 +25,14 @@ public class checkIntegrity {
         // return true;
 
         // Do not check for updates
-        if (!Emulator.getConfig().getBoolean("check_update")) {
+        if (Emulator.getConfig().getValue("hh.check_update").equalsIgnoreCase("false")) {
+            generic.logMessage("IMPORTANT: You have checking for updates turned OFF! We are not responsible if you do not update " + pluginName);
+            generic.logMessage("Check daily the Hackerman.tech website and check for updates to ensure that you are up-to-date!");
             return true;
+        }
+
+        if (Emulator.getConfig().getValue("hh.auto_update").equalsIgnoreCase("false")) {
+            generic.logMessage("You have automatic updates turned off. You must manually update via the Hackerman.tech website");
         }
 
         // Check if the values are setup correctly
@@ -52,14 +58,9 @@ public class checkIntegrity {
                 response.append ( inputLine );
             }
             in.close ( );
-            String contentType = con.getContentType();
-
-            if (!contentType.equalsIgnoreCase("application/json")) {
-                generic.logCore("Integrity check did not return JSON. Tampered with?");
-                return false;
-            }
 
             // Parse the response as JSON
+            System.out.println(response.toString());
             JSONObject jsonObject = new JSONObject(response.toString());
             // Get status
             String status = jsonObject.getString("status");
@@ -97,13 +98,13 @@ public class checkIntegrity {
                         System.out.println("[!] Changelog: " + changelog + "\n");
 
                         // If auto update is true then download the update
-                        if (Emulator.getConfig().getBoolean("auto_update")) {
+                        if (!Emulator.getConfig().getValue("hh.auto_update").equalsIgnoreCase("false")) {
                             updateDirectoryPlugin(jsonObject.getString("download_url"));
                         }
                     }
                     return true;
                 default:
-                    System.out.println ( "[~] Failed to check the integrity");
+                    System.out.println ( "[~] Failed to check the integrity.");
             }
         } catch (Exception e) {
             System.out.println ( "[~] Failed to check integrity: " + e.getMessage());
