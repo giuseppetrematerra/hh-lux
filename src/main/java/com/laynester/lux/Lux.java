@@ -21,18 +21,21 @@ import java.io.IOException;
 import static com.laynester.lux.commands.rooms.buildheight.BUILD_HEIGHT_KEY;
 import static com.laynester.lux.hhcore.checkIntegrity.checkIntegrity;
 
+// This plugin is originally created by Layne but maintained by Hackerman
+// Thank you Layne <3.
+
 public class Lux extends HabboPlugin implements EventListener {
     public static String pluginShort = "lux";
     public static String pluginPrefix = "LUX";
     public static String pluginName = "Lux";
     public static String pluginAuthor = "Layne & Hackerman";
-    public static String version = "2.3.1";
+    public static String version = "2.3.2";
     public static int productId = 4;
     public static Lux INSTANCE = null;
 
     public void onEnable () throws Exception {
         Emulator.getPluginManager().registerEvents(this, this);
-        System.out.println ( "[~] Detected plugin `" + pluginName + "` by " + pluginAuthor + " version " + version);
+        System.out.println ( "[~] Detected plugin `" + pluginName + "` by " + pluginAuthor + " version " + version + "! Support @ Hackerman.tech");
     }
 
     // Layné west is copyrighted by Hackerman (c) 2020-2070
@@ -59,13 +62,7 @@ public class Lux extends HabboPlugin implements EventListener {
             long startTime = System.currentTimeMillis ();
 
             CommandManager commands = new CommandManager();
-            try {
-                commands.load();
-                generic.logMessage("Command Manager -> OK");
-            } catch (Exception ex) {
-                generic.logMessage("Command Manager -> ERROR");
-                error.logError("loadCommands","Lux > Emulator Load > Load Commands","", 2, false, ex);
-            }
+            commands.load();
 
             Registry register = new Registry();
             try {

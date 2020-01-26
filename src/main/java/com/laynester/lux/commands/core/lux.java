@@ -2,6 +2,7 @@ package com.laynester.lux.commands.core;
 
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
+import com.laynester.lux.Lux;
 
 public class lux extends Command
 {
@@ -13,7 +14,7 @@ public class lux extends Command
     @Override
     public boolean handle(GameClient gameClient, String[] strings) throws Exception
     {
-        String message = "<b>Lux</b>\n";
+        String message = "<b>Lux</b> version " + Lux.version + "\n";
         message = message + "Lux is an Arcturus Morningstar plugin created by Laynester\r\n";
         message = message + "<b>Features:</b>\n";
         message = message + "- Welcome Alert\n";
