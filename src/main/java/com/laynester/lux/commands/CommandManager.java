@@ -2,6 +2,7 @@ package com.laynester.lux.commands;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.CommandHandler;
+import com.laynester.lux.commands.core.lux;
 import com.laynester.lux.commands.rooms.CloseDiceCommand;
 import com.laynester.lux.commands.rooms.RollDiceCommand;
 import com.laynester.lux.commands.rooms.buildheight;
@@ -28,6 +29,7 @@ public class CommandManager  {
         CommandHandler.addCommand(new welcome("cmd_welcome",Emulator.getTexts().getValue("lux.cmd_welcome.keys").split(";")));
         CommandHandler.addCommand(new pay("cmd_pay",Emulator.getTexts().getValue("lux.cmd_pay.keys").split(";")));
         CommandHandler.addCommand(new PullCommand());
+        CommandHandler.addCommand(new lux());
         CommandHandler.addCommand(new SuperPullCommand());
         CommandHandler.addCommand(new PushCommand());
     }

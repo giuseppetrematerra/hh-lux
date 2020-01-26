@@ -3,11 +3,6 @@ package com.laynester.lux.commands.rooms;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
-import com.eu.habbo.plugin.EventHandler;
-import com.eu.habbo.plugin.events.furniture.FurnitureMovedEvent;
-import com.eu.habbo.plugin.events.furniture.FurniturePlacedEvent;
-import com.eu.habbo.plugin.events.users.UserExitRoomEvent;
-import com.laynester.lux.Lux;
 
 import java.util.EventListener;
 

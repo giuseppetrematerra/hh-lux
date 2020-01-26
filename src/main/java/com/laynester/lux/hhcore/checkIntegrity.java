@@ -2,6 +2,7 @@ package com.laynester.lux.hhcore;
 
 import com.eu.habbo.Emulator;
 import com.laynester.lux.Lux;
+import com.laynester.lux.hhcore.log.generic;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -12,9 +13,23 @@ import java.net.URL;
 
 import static com.laynester.lux.Lux.pluginName;
 import static com.laynester.lux.Lux.productId;
+import static com.laynester.lux.hhcore.updatePlugin.updateDirectoryPlugin;
+
+// This class checks for plugin information directly on the Hackerman servers
+// The only data we store is the IP, your forum ID and the timestamp the request was made
 
 public class checkIntegrity {
     public static boolean checkIntegrity() throws IOException {
+
+        // NOTE: If you do not wish to use this you can simply uncomment the following:
+        // return true;
+
+        // Do not check for updates
+        if (!Emulator.getConfig().getBoolean("check_update")) {
+            return true;
+        }
+
+        // Check if the values are setup correctly
        if (Emulator.getConfig().getValue("hh.username") == null || Emulator.getConfig().getValue("hh.email") == null || Emulator.getConfig().getValue("hh.check_update") == null || Emulator.getConfig().getValue("hh.hotel_url") == null) {
            System.out.println ( "\n[!] [HH] Incorrect installation. Please refer to the installation document for more information." );
            return false;
@@ -37,6 +52,12 @@ public class checkIntegrity {
                 response.append ( inputLine );
             }
             in.close ( );
+            String contentType = con.getContentType();
+
+            if (!contentType.equalsIgnoreCase("application/json")) {
+                generic.logCore("Integrity check did not return JSON. Tampered with?");
+                return false;
+            }
 
             // Parse the response as JSON
             JSONObject jsonObject = new JSONObject(response.toString());
@@ -46,35 +67,27 @@ public class checkIntegrity {
             switch (status) {
                 case "ERROR":
                     System.out.println("\n[!] Failed to enable `" + pluginName + "`: " + jsonObject.getString("message"));
-                    if (jsonObject.getInt("version") == 1) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return jsonObject.getInt("version") == 1;
                 case "BLOCK":
                     String type = jsonObject.getString("type");
-                    if (type.equalsIgnoreCase("SEC")) { // If type is sec it means a security block
+                    // This is only used when a plugin contains a vulnerability that can really fuck over hotels.
+                    if (type.equalsIgnoreCase("SEC")) {
                         System.out.println("\n[!] Plugin `" + pluginName + "` is disabled due to a possible vulnerability!");
                         System.out.println("[!] Optional note from developer: " + jsonObject.getString("message"));
                         System.out.println("[!] Update this plugin as quickly as possible @ Hackerman.tech\n");
                         return false;
                     }
-                    if (type.equalsIgnoreCase("OUTDATED")) { // If the plugin is way too outdated we block it too
+                    // If the plugin used is way too outdated we block it if we believe it may contain vulnerabilities
+                    if (type.equalsIgnoreCase("OUTDATED")) {
                         System.out.println("\n[!] Plugin `" + pluginName + "` is disabled because it's outdated.");
                         System.out.println("[!] Update this plugin as quickly as possible @ Hackerman.tech\n");
-                        return false;
-                    }
-                    if (type.equalsIgnoreCase("BAN")) { // Used in extreme cases if the user breached the TOS / Morningstar License - This will NOT be used without REASON!
-                        System.out.println("\n[!] Plugin `" + pluginName + "` is disabled due to a breachment of the terms of service.");
-                        System.out.println("[!] Optional note: " + jsonObject.getString("message"));
-                        System.out.println("[!] Please remove this plugin from your hotel or contact a developer\n");
                         return false;
                     }
                     return false;
 
                 case "OK": // Previous checks are OK! Checking for update
                     String update = jsonObject.getString("update");
-                    if (update.equalsIgnoreCase("NEW_VERSION_AVAILABLE")) { // If type is sec it means a security block
+                    if (update.equalsIgnoreCase("NEW_VERSION_AVAILABLE")) {
 
                         String changelog = jsonObject.getString("changelog");
                         String strRegEx = "<[^>]*>";
@@ -82,6 +95,11 @@ public class checkIntegrity {
 
                         System.out.println("\n[!] Plugin `" + pluginName + "` version " + jsonObject.getString("new_version") + " is now available @ Hackerman.tech");
                         System.out.println("[!] Changelog: " + changelog + "\n");
+
+                        // If auto update is true then download the update
+                        if (Emulator.getConfig().getBoolean("auto_update")) {
+                            updateDirectoryPlugin(jsonObject.getString("download_url"));
+                        }
                     }
                     return true;
                 default:
