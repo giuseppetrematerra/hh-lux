@@ -1,22 +1,17 @@
-package com.laynester.lux.commands;
+package com.laynester.lux.hhplugin.load;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.CommandHandler;
+import com.laynester.lux.commands.*;
 import com.laynester.lux.commands.core.lux;
-import com.laynester.lux.commands.rooms.CloseDiceCommand;
-import com.laynester.lux.commands.rooms.RollDiceCommand;
-import com.laynester.lux.commands.rooms.buildheight;
-import com.laynester.lux.commands.rooms.disableeffects;
+import com.laynester.lux.commands.rooms.*;
 import com.laynester.lux.hhcore.log.error;
 import com.laynester.lux.hhcore.log.generic;
 
-public class CommandManager  {
-
-    public CommandManager() { }
-
-    public void load() {
+public class loadPlayerCommands {
+    public static void loadPlayerCommands() {
+        long startTimeModuleCommandManager = System.currentTimeMillis();
         try {
-            long startTime = System.currentTimeMillis();
             CommandHandler.addCommand(new BubbleAlertCommand("cmd_bubblealert", Emulator.getTexts().getValue("lux.cmd_bubblealert.keys").split(";")));
             CommandHandler.addCommand(new RollDiceCommand("cmd_rolldice", Emulator.getTexts().getValue("lux.cmd_rolldice.keys").split(";")));
             CommandHandler.addCommand(new CloseDiceCommand("cmd_closedice", Emulator.getTexts().getValue("lux.cmd_closedice.keys").split(";")));
@@ -30,12 +25,12 @@ public class CommandManager  {
             CommandHandler.addCommand(new buildheight("cmd_buildheight",Emulator.getTexts().getValue("lux.cmd_buildheight.keys").split(";")));
             CommandHandler.addCommand(new welcome("cmd_welcome",Emulator.getTexts().getValue("lux.cmd_welcome.keys").split(";")));
             CommandHandler.addCommand(new pay("cmd_pay",Emulator.getTexts().getValue("lux.cmd_pay.keys").split(";")));
+            CommandHandler.addCommand(new freezeroom("cmd_freezeroom",Emulator.getTexts().getValue("lux.cmd_freezeroom.keys").split(";")));
             CommandHandler.addCommand(new PullCommand());
             CommandHandler.addCommand(new lux());
             CommandHandler.addCommand(new SuperPullCommand());
             CommandHandler.addCommand(new PushCommand());
-
-            generic.logMessage("Command Manager -> OK");
+            generic.logMessage("Command Manager -> " + (System.currentTimeMillis () - startTimeModuleCommandManager) + "ms -> OK");
         } catch (Exception ex) {
             generic.logMessage("Command Manager -> ERROR");
             error.logError("commandManager","Lux > Emulator Load > Load Commands","", 2, false, ex);

@@ -5,6 +5,7 @@ import com.laynester.lux.Lux;
 import com.laynester.lux.hhcore.log.generic;
 import org.json.JSONObject;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,8 +18,9 @@ import static com.laynester.lux.Lux.*;
 // The only data we store is the IP, your forum ID and the timestamp the request was made
 
 public class checkIntegrity {
+    public static String latestVersion = "Not Checked";
+
     public static boolean checkIntegrity() throws IOException {
-        String latestVersion = "Not Checked";
 
         // Do not check for updates
         if (Emulator.getConfig().getValue(" ").equalsIgnoreCase("false")) {
@@ -38,7 +40,7 @@ public class checkIntegrity {
         String url = "https://api.hackerman.tech/public/integrity.php?username=" + Emulator.getConfig().getValue("hh.username") + "&email=" + Emulator.getConfig().getValue("hh.email") + "&plugin=" + productId + "&version=" + Lux.version + "&url=" + Emulator.getConfig().getValue("hh.hotel_url");
         try {
             URL obj = new URL ( url );
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection ( );
+            HttpsURLConnection con = (HttpsURLConnection) obj.openConnection ( );
             con.setRequestMethod ( "GET" );
             con.setRequestProperty ( "User-Agent" , "Arcturus Morningstar" );
 
@@ -91,8 +93,9 @@ public class checkIntegrity {
 
                         System.out.println("\n[!] Plugin `" + pluginName + "` version " + jsonObject.getString("new_version") + " is now available @ Hackerman.tech");
                         System.out.println("[!] Changelog: " + changelog + "\n");
+                    } else {
+                        latestVersion = "Up to date";
                     }
-                    latestVersion = version;
                     return true;
                 default:
                     generic.logMessage("Failed to check for an update. Update API returned unknown status.");

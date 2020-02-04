@@ -4,6 +4,7 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.rooms.Room;
+import com.eu.habbo.habbohotel.rooms.RoomChatMessageBubbles;
 import com.eu.habbo.habbohotel.users.Habbo;
 
 import java.sql.Connection;
@@ -32,12 +33,12 @@ public class CasinoCommand extends Command {
                 int count = rs.getInt("rowcount");
                 rs.close();
                 if(count == 1) {
-                    gameClient.getHabbo().whisper(Emulator.getTexts().getValue("lux.casino.disabled"));
+                    gameClient.getHabbo().whisper(Emulator.getTexts().getValue("lux.casino.disabled"), RoomChatMessageBubbles.ALERT);
                     try (PreparedStatement statementt = connection.prepareStatement("UPDATE rooms SET is_casino = '0' WHERE id = '"+roomId+"'")) {
                         statementt.execute();
                     }
                 } else {
-                    gameClient.getHabbo().whisper(Emulator.getTexts().getValue("lux.casino.enabled"));
+                    gameClient.getHabbo().whisper(Emulator.getTexts().getValue("lux.casino.enabled"), RoomChatMessageBubbles.ALERT);
                     try (PreparedStatement statementt = connection.prepareStatement("UPDATE rooms SET is_casino = '1' WHERE id = '"+roomId+"'")) {
                         statementt.execute();
                     }

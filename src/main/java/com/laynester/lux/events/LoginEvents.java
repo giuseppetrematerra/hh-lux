@@ -9,7 +9,6 @@ import com.eu.habbo.messages.outgoing.inventory.InventoryRefreshComposer;
 import com.eu.habbo.plugin.EventHandler;
 import com.eu.habbo.plugin.EventListener;
 import com.eu.habbo.plugin.events.users.UserLoginEvent;
-import com.laynester.lux.utils.Discord;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -22,18 +21,6 @@ public class LoginEvents implements EventListener {
 
     @EventHandler
     public static void onUserLoginEvent(UserLoginEvent event) throws IOException {
-
-        if(Emulator.getConfig().getInt("lux.discord.enabled") == 1 && !Emulator.getConfig().getValue("lux.discord.login").equals("")) {
-            Discord webhook = new Discord(Emulator.getConfig().getValue("lux.discord.login"));
-            webhook.addEmbed(new Discord.EmbedObject()
-                    .setDescription(
-                            Emulator.getTexts().getValue("lux.discord.login")
-                                    .replace("%username%",event.habbo.getHabboInfo().getUsername())
-                                    .replace("%ip%",event.habbo.getHabboInfo().getIpLogin())
-                    ));
-            webhook.setUsername("Lux");
-            webhook.execute();
-        }
 
         if(Emulator.getConfig().getInt("lux.welcomeAlert.enabled") == 1) {
             event.habbo.getClient().sendResponse(new NuxAlertComposer(Emulator.getConfig().getValue("lux.welcomeAlert.link")));

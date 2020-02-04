@@ -1,32 +1,34 @@
 package com.laynester.lux.events;
 
 import com.eu.habbo.Emulator;
+import com.eu.habbo.habbohotel.rooms.RoomChatMessageBubbles;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.outgoing.generic.alerts.BubbleAlertComposer;
 import com.eu.habbo.plugin.EventHandler;
 import com.eu.habbo.plugin.EventListener;
 import com.eu.habbo.plugin.events.users.UserTalkEvent;
-import com.laynester.lux.utils.Discord;
+import com.laynester.lux.recharge.rechargeMain;
 import gnu.trove.map.hash.THashMap;
 
 import java.io.IOException;
+
+import static com.laynester.lux.recharge.rechargeMain.setRechargeNow;
 
 public class UserTalk implements EventListener {
 
     @EventHandler
     public static void onUserTalkEvent(UserTalkEvent event) throws IOException {
-        if(Emulator.getConfig().getInt("lux.discord.enabled") == 1 && !Emulator.getConfig().getValue("lux.discord.chat").equals("")) {
-            Discord webhook = new Discord(Emulator.getConfig().getValue("lux.discord.chat"));
-            String message = event.chatMessage.getMessage().replace("\n","").replace("\r","\n");
-            webhook.setContent(message);
-            webhook.setAvatarUrl("https://habbo.com.br/habbo-imaging/avatarimage?figure=" + event.habbo.getHabboInfo().getLook() + "&headonly=1&head_direction=3");
-            webhook.setUsername(event.habbo.getHabboInfo().getUsername() + " Room: "+event.habbo.getHabboInfo().getCurrentRoom().getName());
-            webhook.execute();
-        }
         if (Emulator.getConfig().getInt("lux.mentions.enabled") == 1 && event.chatMessage.getMessage().startsWith("@"))
         {
             Habbo habbo = Emulator.getGameEnvironment().getHabboManager().getHabbo(event.chatMessage.getMessage().substring(1));
-            if (habbo != null && habbo.getHabboInfo().getUsername() != event.habbo.getHabboInfo().getUsername())
+            if (habbo != null && !habbo.getHabboInfo().getUsername().equalsIgnoreCase(event.habbo.getHabboInfo().getUsername()))
+
+                if (!rechargeMain.canUseNow(event.habbo, "mention")) {
+                    event.habbo.whisper(Emulator.getTexts().getValue("lux.error.wait"), RoomChatMessageBubbles.ALERT);
+                    return;
+                }
+            setRechargeNow(event.habbo, "mention", 5000);
+
             {
                 THashMap<String, String> notify_keys = new THashMap<String, String>();
                 notify_keys.put("display", "BUBBLE");

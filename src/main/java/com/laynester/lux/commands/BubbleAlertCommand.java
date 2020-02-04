@@ -27,6 +27,13 @@ public class BubbleAlertCommand extends Command {
             return true;
         }
 
+        String targetUsername = strings[1];
+        StringBuilder message = new StringBuilder();
+
+        for (int i = 2; i < strings.length; i++) {
+            message.append(strings[i]).append(" ");
+        }
+
         String option = strings[1];
         if(option == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("lux.cmd_bubblealert.incorrect.usage"));
@@ -41,7 +48,7 @@ public class BubbleAlertCommand extends Command {
                         THashMap<String, String> events = new THashMap<String, String>();
                         events.put("display", "BUBBLE");
                         events.put("image", Emulator.getConfig().getValue("lux.bubblealert.event.image"));
-                        events.put("message",strings[2] + "\r\n-"+ gameClient.getHabbo().getHabboInfo().getUsername());
+                        events.put("message",message + "\r\n-"+ gameClient.getHabbo().getHabboInfo().getUsername());
                         events.put("linkUrl", "event:navigator/goto/" + gameClient.getHabbo().getHabboInfo().getCurrentRoom().getId() + "");
 
                         for (Map.Entry<Integer, Habbo> map : Emulator.getGameEnvironment().getHabboManager().getOnlineHabbos().entrySet()) {

@@ -8,14 +8,16 @@ import com.eu.habbo.habbohotel.rooms.RoomChatMessageBubbles;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.outgoing.rooms.users.RoomUserTalkComposer;
 import com.eu.habbo.plugin.EventHandler;
+import com.eu.habbo.plugin.EventListener;
 import com.eu.habbo.plugin.events.users.UserExitRoomEvent;
 import com.eu.habbo.plugin.events.users.UserIdleEvent;
-import com.laynester.lux.Lux;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class brb extends Command implements EventListener
-{
+public class brb extends Command implements EventListener {
     public static HashMap<Integer, Integer> userAFKMap = new HashMap<Integer, Integer>();
     public static HashMap<Integer, Integer> requiresUpdate = new HashMap<>();
     public static boolean started = false;
@@ -23,7 +25,6 @@ public class brb extends Command implements EventListener
     public brb(String permission, String[] keys)
     {
         super(permission, keys);
-       // Emulator.getPluginManager().registerEvents(Lux.INSTANCE, handle());
     }
 
     @Override
