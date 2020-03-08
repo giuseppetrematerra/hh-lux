@@ -7,9 +7,9 @@ import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.Habbo;
 import gnu.trove.procedure.TObjectProcedure;
 
-public class disableeffects extends Command
+public class DisableEffectsCommand extends Command
 {
-    public disableeffects(String permission, String[] keys)
+    public DisableEffectsCommand(String permission, String[] keys)
     {
         super(permission, keys);
     }

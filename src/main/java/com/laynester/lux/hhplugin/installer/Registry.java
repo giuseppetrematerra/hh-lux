@@ -1,7 +1,7 @@
 package com.laynester.lux.hhplugin.installer;
 
 import com.eu.habbo.Emulator;
-import com.laynester.lux.hhcore.log.generic;
+import com.laynester.lux.hhcore.util.LogHelper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +17,7 @@ public class Registry {
         boolean installSuccess = true;
         int errors = 0;
         long startTime = System.currentTimeMillis ();
-        generic.logInstall("Starting to install " + pluginName + " version " + version + ":");
+        LogHelper.logInstall("Starting to install " + pluginName + " version " + version + ":");
 
         // Installer V1.0.0
         if (version.equalsIgnoreCase("1.0.0")) {
@@ -223,10 +223,10 @@ public class Registry {
         }
 
         if (installSuccess) {
-            generic.logInstall("Installed " + pluginName + " version " + version + " in " + (System.currentTimeMillis () - startTime) + "ms\n\n");
+            LogHelper.logInstall("Installed " + pluginName + " version " + version + " in " + (System.currentTimeMillis () - startTime) + "ms\n\n");
         } else {
-            generic.logInstall("ERROR IN INSTALLATION: " + errors + " error(s) when trying to install " + pluginName + " version " + version + "!");
-            generic.logInstall("Installation will continue as no critical errors were detected\n\n");
+            LogHelper.logInstall("ERROR IN INSTALLATION: " + errors + " error(s) when trying to install " + pluginName + " version " + version + "!");
+            LogHelper.logInstall("Installation will continue as no critical errors were detected\n\n");
         }
         if (reloadPermissions) {
             Emulator.getGameEnvironment().getPermissionsManager().reload();

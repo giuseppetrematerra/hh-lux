@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Lux">
+    <output-path>$PROJECT_DIR$/out/artifacts/Lux</output-path>
+    <root id="archive" name="Lux.jar">
+      <element id="module-output" name="Lux" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/json/json/20190722/json-20190722.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

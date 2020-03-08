@@ -6,10 +6,10 @@ import com.eu.habbo.habbohotel.gameclients.GameClient;
 
 import java.util.EventListener;
 
-public class buildheight extends Command implements EventListener
+public class BuildHeightCommand extends Command implements EventListener
 {
     public static String BUILD_HEIGHT_KEY = "lux.build_height";
-    public buildheight(String permission, String[] keys)
+    public BuildHeightCommand(String permission, String[] keys)
     {
         super(permission, keys);
 

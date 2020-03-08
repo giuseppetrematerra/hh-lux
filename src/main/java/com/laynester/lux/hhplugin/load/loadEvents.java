@@ -4,8 +4,7 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.plugin.EventListener;
 import com.laynester.lux.Lux;
 import com.laynester.lux.events.*;
-import com.laynester.lux.hhcore.log.error;
-import com.laynester.lux.hhcore.log.generic;
+import com.laynester.lux.hhcore.util.LogHelper;
 import com.laynester.lux.roomManager.buildHeight;
 import com.laynester.lux.roomManager.frozenRoom;
 
@@ -25,10 +24,10 @@ public class loadEvents implements EventListener {
             Emulator.getPluginManager().registerEvents(Lux.INSTANCE, new buildHeight());
             // Emulator.getPluginManager().registerEvents(Lux.INSTANCE, new brb());
 
-            generic.logMessage("Event Manager -> " + (System.currentTimeMillis () - startTimeModuleCommandManager) + "ms -> OK");
+            LogHelper.logMessage("Event Manager -> " + (System.currentTimeMillis () - startTimeModuleCommandManager) + "ms -> OK");
         } catch (Exception ex) {
-            generic.logMessage("Event Manager -> ERROR");
-            error.logError("eventManager","Lux > Emulator Load > Load Events","", 2, false, ex);
+            LogHelper.logMessage("Event Manager -> ERROR");
+            LogHelper.logError("eventManager","Lux > Emulator Load > Load Events","", 2, false, ex);
         }
     }
 }

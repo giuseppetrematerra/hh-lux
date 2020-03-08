@@ -4,9 +4,9 @@ import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.laynester.lux.Lux;
 
-public class lux extends Command
+public class LuxCommand extends Command
 {
-    public lux()
+    public LuxCommand()
     {
         super(null, new String[] { "lux" });
     }

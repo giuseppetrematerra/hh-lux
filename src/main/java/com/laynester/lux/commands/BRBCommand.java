@@ -17,12 +17,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class brb extends Command implements EventListener {
+public class BRBCommand extends Command implements EventListener {
     public static HashMap<Integer, Integer> userAFKMap = new HashMap<Integer, Integer>();
     public static HashMap<Integer, Integer> requiresUpdate = new HashMap<>();
     public static boolean started = false;
 
-    public brb(String permission, String[] keys)
+    public BRBCommand(String permission, String[] keys)
     {
         super(permission, keys);
     }

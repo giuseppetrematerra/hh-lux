@@ -4,7 +4,7 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.plugin.EventHandler;
 import com.eu.habbo.plugin.EventListener;
 import com.eu.habbo.plugin.events.users.UserEnterRoomEvent;
-import com.laynester.lux.hhcore.log.error;
+import com.laynester.lux.hhcore.util.LogHelper;
 import com.laynester.lux.roomManager.casinoRoom;
 import com.laynester.lux.roomManager.frozenRoom;
 
@@ -37,7 +37,7 @@ public class RoomLoaded implements EventListener {
 
             }
         } catch(SQLException e) {
-            error.logError("SQL onRoomLoaded (" + event.room.getId() +")", "onRoomLoaded", "", 1, true, e);
+            LogHelper.logError("SQL onRoomLoaded (" + event.room.getId() +")", "onRoomLoaded", "", 1, true, e);
         }
     }
 }

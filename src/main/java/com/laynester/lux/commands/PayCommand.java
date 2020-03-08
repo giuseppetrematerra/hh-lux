@@ -5,9 +5,9 @@ import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 
-public class pay extends Command
+public class PayCommand extends Command
 {
-    public pay(String permission, String[] keys)
+    public PayCommand(String permission, String[] keys)
     {
         super(permission, keys);
     }

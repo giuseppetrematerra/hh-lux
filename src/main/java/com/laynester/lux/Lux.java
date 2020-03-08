@@ -6,10 +6,10 @@ import com.eu.habbo.plugin.EventHandler;
 import com.eu.habbo.plugin.EventListener;
 import com.eu.habbo.plugin.HabboPlugin;
 import com.eu.habbo.plugin.events.emulator.EmulatorLoadedEvent;
-import com.laynester.lux.hhcore.log.generic;
+import com.laynester.lux.hhcore.util.LogHelper;
 import com.laynester.lux.hhplugin.load.loadEvents;
 
-import static com.laynester.lux.hhcore.checkIntegrity.checkIntegrity;
+import static com.laynester.lux.hhcore.util.CheckIntegrity.checkIntegrity;
 import static com.laynester.lux.hhplugin.loadAll.loadAll;
 
 // This plugin is originally created by Layne but maintained by Hackerman
@@ -36,7 +36,7 @@ public class Lux extends HabboPlugin implements EventListener {
 
     public static void main(String[] args)
     {
-        generic.logMessage("Please move this file in your plugins folder!");
+        LogHelper.logMessage("Please move this file in your plugins folder!");
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Lux extends HabboPlugin implements EventListener {
     public boolean hasPermission(Habbo habbo, String s) {return false; }
 
     @EventHandler
-    public void onEmulatorLoadedEVERYTHING ( EmulatorLoadedEvent e ) throws Exception {
+    public void onEmulatorLoadedEVERYTHING (EmulatorLoadedEvent e) throws Exception {
         long startTime = System.currentTimeMillis ();
         INSTANCE = this;
         if (checkIntegrity()) {

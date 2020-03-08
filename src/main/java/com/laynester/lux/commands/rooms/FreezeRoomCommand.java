@@ -13,9 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class freezeroom extends Command {
+public class FreezeRoomCommand extends Command {
 
-    public freezeroom(String permission, String[] keys)
+    public FreezeRoomCommand(String permission, String[] keys)
     {
         super(permission, keys);
     }

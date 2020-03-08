@@ -5,9 +5,9 @@ import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 
-public class welcome extends Command
+public class WelcomeCommand extends Command
 {
-    public welcome(String permission, String[] keys)
+    public WelcomeCommand(String permission, String[] keys)
     {
         super(permission, keys);
     }
@@ -18,10 +18,8 @@ public class welcome extends Command
         if (strings.length == 2)
         {
             Habbo habbo = gameClient.getHabbo().getHabboInfo().getCurrentRoom().getHabbo(strings[1]);
-            if (habbo != null)
-            {
-                for (String s : Emulator.getTexts().getValue("lux.cmd_welcome.text").split(";"))
-                {
+            if (habbo != null) {
+                for (String s : Emulator.getTexts().getValue("lux.cmd_welcome.text").split(";")) {
                     gameClient.getHabbo().shout(s
                             .replace("%username%", habbo.getHabboInfo().getUsername())
                             .replace("%greeter_username%", gameClient.getHabbo().getHabboInfo().getUsername())
@@ -32,10 +30,8 @@ public class welcome extends Command
                     );
                 }
             }
-
             return true;
         }
-
         return false;
     }
 }

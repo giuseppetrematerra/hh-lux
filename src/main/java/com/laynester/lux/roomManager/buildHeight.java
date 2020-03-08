@@ -7,7 +7,7 @@ import com.eu.habbo.plugin.events.furniture.FurnitureMovedEvent;
 import com.eu.habbo.plugin.events.furniture.FurniturePlacedEvent;
 import com.eu.habbo.plugin.events.users.UserExitRoomEvent;
 
-import static com.laynester.lux.commands.rooms.buildheight.BUILD_HEIGHT_KEY;
+import static com.laynester.lux.commands.rooms.BuildHeightCommand.BUILD_HEIGHT_KEY;
 
 public class buildHeight implements EventListener {
     @EventHandler
